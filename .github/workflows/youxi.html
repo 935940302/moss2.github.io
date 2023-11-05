@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>赌博游戏</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    
+    #game-container {
+      text-align: center;
+    }
+    
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>赌博游戏</h1>
+  
+  <div id="game-container">
+    <h2>下注并赢取大奖</h2>
+    <input type="number" id="bet-input" min="1" max="10" step="1">
+    <button onclick="playGame()">开始赌博</button>
+    <div id="result"></div>
+  </div>
+  
+  <script>
+    var betCount = 0;
+    var maxWinCount = 3; // 前几次赢的次数
+    var maxLoseCount = 1; // 最后必输的次数
+    var a=1000
+    
+    function playGame() {
+      var betInput = document.getElementById("bet-input");
+      var betAmount = parseInt(betInput.value);
+      
+      if (isNaN(betAmount) || betAmount < 1 || betAmount > 10) {
+        alert("请输入一个介于1到10之间的数字！");
+        return;
+      }
+      
+      betCount++;
+      
+      var randomNumber = Math.floor(Math.random() * 10) + 1;
+      
+      if (betCount <= maxWinCount) {
+        document.getElementById("result").textContent = "恭喜！你赢得了大奖！再下一次奖励翻倍!您目前奖金为"+a;
+        a=a*2
+      } else if (betCount <= maxWinCount + maxLoseCount) {
+        document.getElementById("result").textContent = "很遗憾，这次没中奖。";
+      } else {
+        document.getElementById("result").textContent = "很遗憾，你输掉了所有的钱。";
+        document.getElementById("bet-input").disabled = true;
+        document.getElementById("bet-input").value = "";
+        document.getElementById("result").style.color = "red";
+        document.getElementById("result").style.fontWeight = "normal";
+      }
+    }
+  </script>
+</body>
+</html>
